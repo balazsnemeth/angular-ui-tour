@@ -1385,6 +1385,15 @@ exports.default = ["Tether", "$compile", "$document", "$templateCache", "$rootSc
     }
 
     /**
+     * Destroy a step's popover
+     *
+     * @param {{}} step - Step options
+     */
+    service.destroyPopup = function (step) {
+        step.popup.remove();
+    };
+
+    /**
      * Initializes a step from a config object
      *
      * @param {{}} step - Step options
@@ -2101,6 +2110,21 @@ function uiTourController($timeout, $q, $filter, $document, TourConfig, uiTourBa
         }
 
         return step;
+    };
+
+    /**
+    * Destroy a step with destroying the created popup as well
+    *
+    * @protected
+    * @param step
+    */
+    self.destroyStep = function (step) {
+        var index = stepList.indexOf(step);
+
+        if (index !== -1) {
+            TourStepService.destroyPopup(stepList[index]);
+            self.removeStep(step);
+        }
     };
 
     /**
